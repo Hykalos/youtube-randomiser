@@ -25,14 +25,47 @@ class ListReader {
     }
 }
 
+function changeSong() {
+    let index : number = Number(localStorage.getItem("customrandomiserindex"));
+
+    let videos : Video[] = JSON.parse(localStorage.getItem("customrandomiservideos"));
+
+    localStorage.setItem("customrandomiserindex", String(index + 1));
+
+    if(index < videos.length)
+        window.location.replace("https://youtube.com/watch?v=" + videos[index].Id + "&customrandomiser=true");
+}
+
+function shuffle(array : Video[]) {
+    var currentIndex : number = array.length, temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+}
+
 function onShuffleClick(e : Event) : void {
     const listReader = new ListReader();
 
     const videos = listReader.readList();
 
+    localStorage.setItem("customrandomiservideos", JSON.stringify(shuffle(videos)));
+    localStorage.setItem("customrandomiserindex", String(0));
+
     console.log(videos.length, videos[0]);
 
-    window.location.replace("https://youtube.com/watch?v=" + videos[0].Id + "&customrandomiser=true");
+    changeSong();
 
     e.preventDefault();
 }
