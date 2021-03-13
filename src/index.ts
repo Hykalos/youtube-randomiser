@@ -13,7 +13,10 @@ class ListReader {
         let videos : Video[] = new Array(anchors.length);
 
         for(let i = 0; i < anchors.length; ++i) {
-            let video = new Video(anchors[i].getAttribute("href"));
+            const href = anchors[i].getAttribute("href");
+            const idIndex = href.indexOf("?v=")
+            const id = href.substr(idIndex + 3, 11);
+            let video = new Video(id);
 
             videos[i] = video;
         }
@@ -22,15 +25,35 @@ class ListReader {
     }
 }
 
-function Initialize() : void {
-    if(window.location.pathname != "/playlist" || (!window.location.search.includes("&list=") && !window.location.search.includes("?list=")))
-        return;
+function onShuffleClick(e : Event) : void {
+    const listReader = new ListReader();
 
-    const reader = new ListReader();
+    const videos = listReader.readList();
 
-    let videos = reader.readList();
+    console.log(videos.length, videos[0]);
 
-    console.log(videos);
+    window.location.replace("https://youtube.com/watch?v=" + videos[0].Id + "&customrandomiser=true");
+
+    e.preventDefault();
 }
 
-Initialize();
+function addButton() : void {
+    let element = document.createElement("button");
+    element.textContent = "Shuffle";
+
+    element.addEventListener("click", onShuffleClick);
+
+    let title = document.getElementById("display-dialog");
+
+    title.append(element);
+}
+
+function initialize() : void {
+    console.log(window.location.pathname == "/playlist");
+    if(window.location.pathname == "/playlist")
+        addButton();
+
+    
+}
+
+initialize();
