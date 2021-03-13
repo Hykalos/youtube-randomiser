@@ -4,7 +4,7 @@
   "description": "A Firefox extension to randomise Youtube playlists",
   "main": "index.js",
   "scripts": {
-    "build": "babel ./src/index.ts --out-file ./dist/index.js --extensions '.ts'",
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,10 +18,6 @@
   },
   "homepage": "https://github.com/Hykalos/youtube-randomiser#readme",
   "devDependencies": {
-    "@babel/cli": "^7.13.10",
-    "@babel/core": "^7.13.10",
-    "@babel/plugin-transform-typescript": "^7.13.0",
-    "@babel/preset-typescript": "^7.13.0",
     "typescript": "^4.2.3"
   }
 }

@@ -1,0 +1,20 @@
+{
+    "manifest_version": 2,
+    "name": "Youtube Randomiser",
+    "version": "1.0",
+  
+    "description": "Randomise Youtube playlists",
+  
+    "icons": {
+    },
+  
+    "content_scripts": [
+      {
+        "matches": ["https://*.youtube.com/*"],
+        "js": [
+            "dist/index.js"
+        ]
+      }
+    ]
+  
+  }
