@@ -33,7 +33,7 @@ function changeSong() {
     localStorage.setItem("customrandomiserindex", String(index + 1));
 
     if(index < videos.length)
-        window.location.replace("https://youtube.com/watch?v=" + videos[index].Id + "&customrandomiser=true");
+        window.location.assign("https://youtube.com/watch?v=" + videos[index].Id);
 }
 
 function shuffle(array : Video[]) {
@@ -62,6 +62,7 @@ function onShuffleClick(e : Event) : void {
 
     localStorage.setItem("customrandomiservideos", JSON.stringify(shuffle(videos)));
     localStorage.setItem("customrandomiserindex", String(0));
+    localStorage.setItem("customrandomiseractive", String(true));
 
     console.log(videos.length, videos[0]);
 
@@ -70,7 +71,7 @@ function onShuffleClick(e : Event) : void {
     e.preventDefault();
 }
 
-function addButton() : void {
+function addShuffleButton() : void {
     let element = document.createElement("button");
     element.textContent = "Shuffle";
 
@@ -82,11 +83,11 @@ function addButton() : void {
 }
 
 function initialize() : void {
-    console.log(window.location.pathname == "/playlist");
     if(window.location.pathname == "/playlist")
-        addButton();
+        addShuffleButton();
 
-    
+    if(window.location.pathname == "/watch" && Boolean(localStorage.getItem("customrandomiseractive")) === true)
+        console.log("Randomiser active");
 }
 
 initialize();
