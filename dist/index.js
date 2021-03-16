@@ -17,55 +17,53 @@ class ListReader {
         return videos;
     }
 }
+function changeSong() {
+    const index = Number(localStorage.getItem("customrandomiserindex"));
+    const videos = JSON.parse(localStorage.getItem("customrandomiservideos"));
+    localStorage.setItem("customrandomiserindex", String(index + 1));
+    if (index < videos.length)
+        window.location.assign("https://youtube.com/watch?v=" + videos[index].Id);
+    else
+        localStorage.setItem("customrandomiseractive", String(false));
+}
 class Randomizer {
     initialize() {
         this.checkIfFinished();
     }
-    changeSong() {
-        const index = Number(localStorage.getItem("customrandomiserindex"));
-        const videos = JSON.parse(localStorage.getItem("customrandomiservideos"));
-        localStorage.setItem("customrandomiserindex", String(index + 1));
-        if (index < videos.length)
-            window.location.assign("https://youtube.com/watch?v=" + videos[index].Id);
-        else
-            localStorage.setItem("customrandomiseractive", String(false));
-    }
     checkIfFinished() {
         const videoPlayer = document.querySelector("ytd-player #movie_player");
         if (videoPlayer && videoPlayer.className.includes("ended-mode"))
-            this.changeSong();
+            changeSong();
         else
             setTimeout(() => { this.checkIfFinished(); }, 1000);
     }
 }
+function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+    return array;
+}
 class Shuffler {
-    constructor(randomizer) {
-        this.randomizer = randomizer;
-    }
-    shuffle(array) {
-        var currentIndex = array.length, temporaryValue, randomIndex;
-        // While there remain elements to shuffle...
-        while (0 !== currentIndex) {
-            // Pick a remaining element...
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex -= 1;
-            // And swap it with the current element.
-            temporaryValue = array[currentIndex];
-            array[currentIndex] = array[randomIndex];
-            array[randomIndex] = temporaryValue;
-        }
-        return array;
-    }
     onShuffleClick(e) {
         const listReader = new ListReader();
         const videos = listReader.readList();
-        localStorage.setItem("customrandomiservideos", JSON.stringify(this.shuffle(videos)));
+        var shuffledVideos = shuffle(videos);
+        localStorage.setItem("customrandomiservideos", JSON.stringify(shuffledVideos));
         localStorage.setItem("customrandomiserindex", String(0));
         localStorage.setItem("customrandomiseractive", String(true));
-        this.randomizer.changeSong();
+        changeSong();
         e.preventDefault();
     }
-    addShuffleButton(randomizer) {
+    addShuffleButton() {
         let element = document.createElement("button");
         element.textContent = "Shuffle";
         element.addEventListener("click", this.onShuffleClick);
@@ -78,12 +76,12 @@ class Shuffler {
     }
 }
 function initialize() {
-    const randomizer = new Randomizer();
     if (window.location.pathname == "/playlist") {
-        const shuffler = new Shuffler(randomizer);
-        shuffler.addShuffleButton(randomizer);
+        const shuffler = new Shuffler();
+        shuffler.addShuffleButton();
     }
     if (window.location.pathname == "/watch" && Boolean(localStorage.getItem("customrandomiseractive")) === true) {
+        const randomizer = new Randomizer();
         randomizer.initialize();
     }
 }

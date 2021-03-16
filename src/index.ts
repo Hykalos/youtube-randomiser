@@ -25,75 +25,70 @@ class ListReader {
     }
 }
 
+function changeSong() : void {
+    const index : number = Number(localStorage.getItem("customrandomiserindex"));
+
+    const videos : Video[] = JSON.parse(localStorage.getItem("customrandomiservideos"));
+
+    localStorage.setItem("customrandomiserindex", String(index + 1));
+
+    if(index < videos.length)
+        window.location.assign("https://youtube.com/watch?v=" + videos[index].Id);
+    else
+        localStorage.setItem("customrandomiseractive", String(false));
+}
+
 class Randomizer {
     initialize(): void {
         this.checkIfFinished();
-    }
-
-    changeSong() : void {
-        const index : number = Number(localStorage.getItem("customrandomiserindex"));
-    
-        const videos : Video[] = JSON.parse(localStorage.getItem("customrandomiservideos"));
-    
-        localStorage.setItem("customrandomiserindex", String(index + 1));
-    
-        if(index < videos.length)
-            window.location.assign("https://youtube.com/watch?v=" + videos[index].Id);
-        else
-            localStorage.setItem("customrandomiseractive", String(false));
     }
 
     checkIfFinished(): void {
         const videoPlayer = document.querySelector("ytd-player #movie_player") as HTMLElement;
 
         if(videoPlayer && videoPlayer.className.includes("ended-mode"))
-            this.changeSong();
+            changeSong();
         else
             setTimeout(() => { this.checkIfFinished(); }, 1000);
     }
 }
 
-class Shuffler {
-    private randomizer : Randomizer
+function shuffle(array : Video[]) : Video[] {
+    var currentIndex : number = array.length, temporaryValue, randomIndex;
 
-    constructor(randomizer : Randomizer) {
-        this.randomizer = randomizer;
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
     }
 
-    shuffle(array : Video[]) : Video[] {
-        var currentIndex : number = array.length, temporaryValue, randomIndex;
-    
-        // While there remain elements to shuffle...
-        while (0 !== currentIndex) {
-    
-            // Pick a remaining element...
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex -= 1;
-    
-            // And swap it with the current element.
-            temporaryValue = array[currentIndex];
-            array[currentIndex] = array[randomIndex];
-            array[randomIndex] = temporaryValue;
-        }
-    
-        return array;
-    }
-    
+    return array;
+}
+
+class Shuffler {    
     onShuffleClick(e : Event) : void {
-        const listReader = new ListReader();
+        const listReader : ListReader = new ListReader();
     
-        const videos = listReader.readList();
+        const videos : Video[] = listReader.readList();
+
+        var shuffledVideos : Video[] = shuffle(videos);
     
-        localStorage.setItem("customrandomiservideos", JSON.stringify(this.shuffle(videos)));
+        localStorage.setItem("customrandomiservideos", JSON.stringify(shuffledVideos));
         localStorage.setItem("customrandomiserindex", String(0));
         localStorage.setItem("customrandomiseractive", String(true));
     
-        this.randomizer.changeSong();
+        changeSong();
     
         e.preventDefault();
     }
     
-    addShuffleButton(randomizer : Randomizer) : void {
+    addShuffleButton() : void {
         let element = document.createElement("button");
         element.textContent = "Shuffle";
     
@@ -111,16 +106,16 @@ class Shuffler {
 }
 
 function initialize() : void {
-    const randomizer = new Randomizer();
-
     if(window.location.pathname == "/playlist")
     {
-        const shuffler = new Shuffler(randomizer);
-        shuffler.addShuffleButton(randomizer);
+        const shuffler = new Shuffler();
+        shuffler.addShuffleButton();
     }
 
     if(window.location.pathname == "/watch" && Boolean(localStorage.getItem("customrandomiseractive")) === true)
     {
+        const randomizer = new Randomizer();
+
         randomizer.initialize();
     }
 }
