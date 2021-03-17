@@ -7,7 +7,8 @@ This addon hasn't been uploaded to [addons.mozilla.org](https://addons.mozilla.o
 1. Download manifest.json and the dist folder. Remember to keep the dist folder in the same folder as manifest.json
 1. Open about:debugging in Firefox and load the addon as a temporary addon
 1. Go to [Youtube](https://www.youtube.com) and allow it to autoplay by clicking the icon next to the address bar
-[Autoplay in Youtube](images/allow-autoplay.png)
+
+![Autoplay in Youtube](images/allow-autoplay.png)
 
 ## Play randomised playlist
 Note that you need to load the addon as a temporary addon every time you open Firefox.
