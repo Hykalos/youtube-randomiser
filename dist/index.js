@@ -29,6 +29,7 @@ function changeSong() {
 class Randomizer {
     initialize() {
         this.checkIfFinished();
+        this.checkFullScreen();
     }
     checkIfFinished() {
         const videoPlayer = document.querySelector("ytd-player #movie_player");
@@ -36,6 +37,15 @@ class Randomizer {
             changeSong();
         else
             setTimeout(() => { this.checkIfFinished(); }, 1000);
+    }
+    checkFullScreen() {
+        const videoPlayer = document.querySelector("ytd-player #movie_player");
+        if (videoPlayer
+            && Boolean(localStorage.getItem("customrandomiserfullscreen"))
+            && !videoPlayer.className.includes("ytp-fullscreen"))
+            document.dispatchEvent(new KeyboardEvent("keydown", { keyCode: 70 }));
+        else
+            setTimeout(() => { this.checkFullScreen(); }, 1000);
     }
 }
 function shuffle(array) {
