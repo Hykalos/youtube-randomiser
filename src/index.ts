@@ -56,9 +56,10 @@ class Randomizer {
 
     checkFullScreen(): void {
         const videoPlayer = document.querySelector("ytd-player #movie_player") as HTMLElement;
-        const video = document.getElementsByTagName("video")[0];
 
-        if(videoPlayer && Boolean(localStorage.getItem("customrandomiserfullscreen")) && !videoPlayer.className.includes("ytp-fullscreen"))
+        if(videoPlayer 
+            && Boolean(localStorage.getItem("customrandomiserfullscreen"))
+            && !videoPlayer.className.includes("ytp-fullscreen"))
             document.dispatchEvent(new KeyboardEvent("keydown", { keyCode: 70}));
         else
             setTimeout(() => { this.checkFullScreen(); }, 1000);

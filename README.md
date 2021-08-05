@@ -1,6 +1,14 @@
 # Youtube randomiser
 This is a quickly implemented Firefox addon to properly randomise playlists. Due to it's implemented quickly, there are some quirks.
 
+## Build
+Run the following commands in your favourite terminal in the base folder of the project:
+
+```
+npm install
+npm run build
+```
+
 ## Install
 This addon hasn't been uploaded to [addons.mozilla.org](https://addons.mozilla.org), so the installation is a bit more manual:
 
@@ -29,3 +37,9 @@ You can stop the randomiser from going to the next video by opening the develope
 1. Either remove the entry `customrandomiseractive` or set the value of it to `false`
 
 To activate the randomiser again, set the `customrandomiseractive` value to `true` again and it will pick up from where it left off
+
+## Fullscreen
+To get the video to automatically go into fullscreen after it's changed the video, do the following:
+
+1. Add an entry into the local storage called `customrandomiserfullscreen` and set the value to `true`
+1. Go into about:config and set the setting `full-screen-api.allow-trusted-requests-only` to `false`
