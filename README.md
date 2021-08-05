@@ -39,7 +39,6 @@ You can stop the randomiser from going to the next video by opening the develope
 To activate the randomiser again, set the `customrandomiseractive` value to `true` again and it will pick up from where it left off
 
 ## Fullscreen
-To get the video to automatically go into fullscreen after it's changed the video, do the following:
+To get the video to automatically go back into fullscreen after it's changed the video, do the following:
 
-1. Add an entry into the local storage called `customrandomiserfullscreen` and set the value to `true`
 1. Go into about:config and set the setting `full-screen-api.allow-trusted-requests-only` to `false`
