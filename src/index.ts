@@ -32,6 +32,9 @@ function changeSong() : void {
 
     localStorage.setItem("customrandomiserindex", String(index + 1));
 
+    const videoPlayer = document.querySelector("ytd-player #movie_player") as HTMLElement;
+    localStorage.setItem("customrandomiserfullscreen", String(videoPlayer.className.includes("ytp-fullscreen")))
+
     if(index < videos.length)
         window.location.assign("https://youtube.com/watch?v=" + videos[index].Id);
     else
@@ -57,10 +60,11 @@ class Randomizer {
     checkFullScreen(): void {
         const videoPlayer = document.querySelector("ytd-player #movie_player") as HTMLElement;
 
-        if(videoPlayer 
-            && Boolean(localStorage.getItem("customrandomiserfullscreen"))
-            && !videoPlayer.className.includes("ytp-fullscreen"))
-            document.dispatchEvent(new KeyboardEvent("keydown", { keyCode: 70}));
+        if(videoPlayer) {
+            if(localStorage.getItem("customrandomiserfullscreen") == "true"
+                && !videoPlayer.className.includes("ytp-fullscreen"))
+                document.dispatchEvent(new KeyboardEvent("keydown", { keyCode: 70}));
+        }
         else
             setTimeout(() => { this.checkFullScreen(); }, 1000);
     }
