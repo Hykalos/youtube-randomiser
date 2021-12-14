@@ -1,6 +1,7 @@
 class Video {
-    constructor(id) {
+    constructor(id, name) {
         this.Id = id;
+        this.Name = name;
     }
 }
 class ListReader {
@@ -9,9 +10,10 @@ class ListReader {
         let videos = new Array(anchors.length);
         for (let i = 0; i < anchors.length; ++i) {
             const href = anchors[i].getAttribute("href");
+            const name = anchors[i].textContent;
             const idIndex = href.indexOf("?v=");
-            const id = href.substr(idIndex + 3, 11);
-            let video = new Video(id);
+            const id = href.substring(idIndex + 3, idIndex + 15);
+            let video = new Video(id, name);
             videos[i] = video;
         }
         return videos;
