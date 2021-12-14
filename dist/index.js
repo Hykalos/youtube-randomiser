@@ -71,8 +71,7 @@ class Shuffler {
     onShuffleClick(e) {
         const listReader = new ListReader();
         const videos = listReader.readList();
-        // var shuffledVideos : Video[] = shuffle(videos);
-        var shuffledVideos = videos;
+        var shuffledVideos = shuffle(videos);
         localStorage.setItem("customrandomiservideos", JSON.stringify(shuffledVideos));
         localStorage.setItem("customrandomiserindex", String(0));
         localStorage.setItem("customrandomiseractive", String(true));
