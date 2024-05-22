@@ -95,29 +95,25 @@ class Shuffler {
         const videos : Video[] = listReader.readList();
 
         var shuffledVideos : Video[] = shuffle(videos);
-    
+
         localStorage.setItem("customrandomiservideos", JSON.stringify(shuffledVideos));
         localStorage.setItem("customrandomiserindex", String(0));
         localStorage.setItem("customrandomiseractive", String(true));
-    
+
         changeSong();
-    
+
         e.preventDefault();
     }
     
     addShuffleButton() : void {
         let element = document.createElement("button");
         element.textContent = "Shuffle";
-    
-        element.addEventListener("click", this.onShuffleClick);
-    
-        // Case for when you own the playlist
-        let title = document.getElementById("display-dialog");
 
-        // Case for when you don't own the playlist
-        if(!title)
-            title = document.querySelector("h1#title");
-    
+        element.addEventListener("click", this.onShuffleClick);
+
+        // Put the button next to the owner
+        let title = document.getElementById("owner-text");
+
         title.append(element);
     }
 }
