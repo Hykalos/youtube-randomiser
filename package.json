@@ -1,6 +1,6 @@
 {
   "name": "youtube-randomiser",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Firefox extension to randomise Youtube playlists",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/Hykalos/youtube-randomiser.git"
   },
-  "author": "Morten Turn Pedersen",
+  "author": "Morten Turn Lund",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Hykalos/youtube-randomiser/issues"
