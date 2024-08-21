@@ -10,7 +10,7 @@ class ListReader {
         for (let i = 0; i < anchors.length; ++i) {
             const href = anchors[i].getAttribute("href");
             const idIndex = href.indexOf("?v=");
-            const id = href.substring(idIndex + 3, idIndex + 15);
+            const id = href.substring(idIndex + 3, idIndex + 14);
             let video = new Video(id);
             videos[i] = video;
         }
