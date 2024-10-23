@@ -80,9 +80,11 @@ class Shuffler {
         let element = document.createElement("button");
         element.textContent = "Shuffle";
         element.addEventListener("click", this.onShuffleClick);
-        // Put the button next to the owner
-        let title = document.getElementById("owner-text");
-        title.append(element);
+        // Put the button next to the title
+        let titles = document.getElementsByClassName("dynamic-text-view-model-wiz__h1");
+        for (var title of titles) {
+            title.append(element);
+        }
     }
 }
 function initialize() {
