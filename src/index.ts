@@ -88,7 +88,7 @@ function shuffle(array : Video[]) : Video[] {
     return array;
 }
 
-class Shuffler {    
+class Shuffler {
     onShuffleClick(e : Event) : void {
         const listReader : ListReader = new ListReader();
     
@@ -111,10 +111,13 @@ class Shuffler {
 
         element.addEventListener("click", this.onShuffleClick);
 
-        // Put the button next to the owner
-        let title = document.getElementById("owner-text");
+        // Put the button next to the title
+        let titles = document.getElementsByClassName("dynamic-text-view-model-wiz__h1");
 
-        title.append(element);
+        for(var title of titles)
+        {
+            title.append(element);
+        }
     }
 }
 
