@@ -116,7 +116,11 @@ class Shuffler {
 
         for(var title of titles)
         {
+            if(!title.checkVisibility())
+                continue;
+
             title.append(element);
+            break;
         }
     }
 }

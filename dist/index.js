@@ -83,7 +83,10 @@ class Shuffler {
         // Put the button next to the title
         let titles = document.getElementsByClassName("dynamic-text-view-model-wiz__h1");
         for (var title of titles) {
+            if (!title.checkVisibility())
+                continue;
             title.append(element);
+            break;
         }
     }
 }
