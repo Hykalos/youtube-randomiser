@@ -81,7 +81,7 @@ class Shuffler {
         element.textContent = "Shuffle";
         element.addEventListener("click", this.onShuffleClick);
         // Put the button next to the title
-        let titles = document.getElementsByClassName("dynamic-text-view-model-wiz__h1");
+        let titles = document.getElementsByClassName("dynamicTextViewModelH1");
         for (var title of titles) {
             if (!title.checkVisibility())
                 continue;
